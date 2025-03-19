@@ -22,12 +22,15 @@ export const Items = {
         const isUnbreakable = item.nbt?.Unbreakable === 1;
         const isGlowing = item.nbt?.ench !== undefined;
 
+        let extraAttributes = item.nbt.ExtraAttributes ?? {}
+        extraAttributes.id = item.internalname
+
         itemsFile.push({
             id: getItemId(item.itemid, item.damage),
             components: {
                 'minecraft:attribute_modifiers': { modifiers: [], show_in_tooltip: false },
                 'minecraft:hide_additional_tooltip': {},
-                'minecraft:custom_data': item.nbt.ExtraAttributes ?? {},
+                'minecraft:custom_data': extraAttributes,
                 'minecraft:unbreakable': isUnbreakable ? { show_in_tooltip: false } : undefined,
                 'minecraft:enchantment_glint_override': isGlowing ? true : undefined,
                 'minecraft:custom_name': `'${item.displayname}'`,
