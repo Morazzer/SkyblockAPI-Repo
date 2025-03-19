@@ -23,7 +23,9 @@ export const Items = {
         const isGlowing = item.nbt?.ench !== undefined;
 
         let extraAttributes = item.nbt.ExtraAttributes ?? {}
-        extraAttributes.id = item.internalname
+        if (extraAttributes.id !== item.internalname && !item.internalname.includes(";")) {
+            extraAttributes.id = item.internalname
+        }
 
         itemsFile.push({
             id: getItemId(item.itemid, item.damage),
